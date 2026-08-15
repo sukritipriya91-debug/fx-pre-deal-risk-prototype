@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ProcessStep from "./components/ProcessStep";
-import MetricCard from "./components/MetricCard";
-import process from "./data/process.json";
+import ProcessStep from "./Components/ProcessStep";
+import MetricCard from "./Components/MetricCard";
+import process from "./Data/process.json";
 import "./App.css";
 
 function App() {
