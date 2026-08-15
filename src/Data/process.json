@@ -1,0 +1,79 @@
+{
+  "name": "FX Pre-Deal Credit Risk Check",
+  "asIs": {
+    "title": "Current FX Pre-Deal Check",
+    "steps": [
+      {
+
+        "number": 1,
+        "title": "Open trading application",
+        "description": "Trader opens the relevant trading workflow.",
+        "painPoint": false
+      },
+      {
+        "number": 2,
+        "title": "Navigate to credit risk screen",
+        "description": "Trader navigates across multiple screens to initiate the pre-deal check.",
+        "painPoint": true
+      },
+      {
+        "number": 3,
+        "title": "Enter trade parameters",
+        "description": "Trader manually enters trade information across multiple fields.",
+        "painPoint": true
+      },
+      {
+        "number": 4,
+        "title": "Run credit risk check",
+        "description": "Trader submits the information for a pre-deal credit risk assessment.",
+        "painPoint": false
+      },
+      {
+        "number": 5,
+        "title": "Review risk result",
+        "description": "Risk information is reviewed before the trade can proceed.",
+        "painPoint": true
+      },
+      {
+        "number": 6,
+        "title": "Modify or approve",
+        "description": "Risk officer may need to review or modify the result before proceeding.",
+        "painPoint": true
+      }
+    ]
+  },
+  "toBe": {
+    "title": "AI-Assisted Pre-Deal Check",
+    "steps": [
+      {
+        "number": 1,
+        "title": "Describe the trade",
+        "description": "Trader provides mandatory trade parameters through a conversational interface."
+      },
+      {
+        "number": 2,
+        "title": "Validate trade parameters",
+        "description": "The system identifies and validates required parameters such as lot size, position, issuer and price."
+      },
+      {
+        "number": 3,
+        "title": "Calculate credit risk",
+        "description": "A machine-learning classification model evaluates the trade and produces a risk classification."
+      },
+      {
+        "number": 4,
+        "title": "Human risk review",
+        "description": "Risk officers review the result before any trade-related data is modified."
+      }
+    ]
+  },
+  "metrics": {
+    "screensBefore": "Multiple",
+    "screensAfter": "1",
+    "manualStepsBefore": "6",
+    "manualStepsAfter": "4",
+    "estimatedEfficiencyImprovement": "40%",
+    "riskOfficerPopulation": "20,000+",
+    "adoptionRate": "60%"
+  }
+}
