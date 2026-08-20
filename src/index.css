@@ -109,3 +109,70 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Option / Chip visibility fixes
+   Ensure AS-IS, TO-BE, Try Me / Today chips are visible when unselected and
+   remain accessible and high-contrast when selected. Adjust selectors to match
+   your markup if your components use different class names. */
+.option,
+.chip,
+.tag,
+.toggle-option,
+.option-label {
+  color: var(--text-h);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* Selected / active state */
+.option.selected,
+.chip.selected,
+.tag.selected,
+.toggle-option[aria-pressed="true"],
+input[type="radio"]:checked + label,
+input[type="checkbox"]:checked + label {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow);
+}
+
+/* Focus styles for keyboard users */
+.option:focus,
+.chip:focus,
+.tag:focus,
+.toggle-option:focus,
+input[type="radio"]:focus + label,
+input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 0 3px rgba(170,59,255,0.12), 0 4px 6px rgba(0,0,0,0.06);
+  outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .option,
+  .chip,
+  .tag,
+  .toggle-option,
+  .option-label {
+    color: var(--text);
+    border-color: var(--border);
+    background: transparent;
+  }
+
+  .option.selected,
+  .chip.selected,
+  .tag.selected,
+  .toggle-option[aria-pressed="true"],
+  input[type="radio"]:checked + label,
+  input[type="checkbox"]:checked + label {
+    background: var(--accent);
+    color: var(--bg);
+  }
+}
