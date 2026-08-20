@@ -9,12 +9,11 @@ body {
   color: #172033;
 }
 
-button {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
-}
-
-.app {
-  min-height: 100vh;
 }
 
 .header {
@@ -31,124 +30,94 @@ button {
   margin-bottom: 8px;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 34px;
-}
-
-.header p {
-  margin-top: 8px;
-  color: #667085;
-  font-size: 16px;
-}
+.header h1 { margin: 0; font-size: 34px; }
+.header p { margin-top: 8px; color: #667085; font-size: 16px; }
 
 .container {
   max-width: 1000px;
   margin: 40px auto;
-  padding: 0 24px;
+  padding: 0 24px 60px;
 }
 
+/* Persistent navigation: all three options are always visible. */
 .tabs {
-  display: flex;
-  gap: 8px;
+  position: sticky;
+  top: 16px;
+  z-index: 20;
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
   margin-bottom: 32px;
+  background: rgba(255,255,255,.94);
+  border: 1px solid #dfe3ea;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16,24,40,.08);
+  backdrop-filter: blur(10px);
 }
 
-/* Ensure tab buttons are always visible: set explicit foreground color for both
-   unselected and selected states, and increase contrast if global styles override */
 .tabs button {
-  padding: 12px 28px;
-  border: 1px solid rgba(16,24,40,0.08);
-  background: #ffffff; /* explicit white background */
+  min-width: 112px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
   border-radius: 8px;
+  background: transparent;
+  color: #344054 !important;
+  -webkit-text-fill-color: #344054 !important;
   cursor: pointer;
-  font-weight: 600;
-  color: #172033 !important; /* explicit dark text color for unselected tabs */
-  -webkit-text-fill-color: #172033 !important; /* safeguard */
-  box-shadow: 0 1px 0 rgba(23,32,51,0.04);
-  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  transition: all 160ms ease;
 }
 
-/* Hover / focus states */
-.tabs button:hover,
-.tabs button:focus {
-  border-color: #98a2b3;
-  outline: none;
-  box-shadow: 0 4px 12px rgba(23,32,51,0.08);
-  transform: translateY(-1px);
+.tabs button:hover {
+  background: #f2f4f7;
+  color: #101828 !important;
+  -webkit-text-fill-color: #101828 !important;
 }
 
-/* Active tab (selected) keeps a strong contrast */
 .tabs button.active {
   background: #172033 !important;
-  color: #ffffff !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
   border-color: #172033 !important;
-  box-shadow: 0 6px 18px rgba(23,32,51,0.18), inset 0 -2px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 4px 10px rgba(23,32,51,.18);
 }
 
-/* Support for aria-selected in case tabs are managed via ARIA instead of .active */
-.tabs button[aria-selected="true"] {
-  background: #172033 !important;
-  color: #ffffff !important;
-  border-color: #172033 !important;
-  box-shadow: 0 6px 18px rgba(23,32,51,0.18), inset 0 -2px 0 rgba(255,255,255,0.04);
-}
-
-/* If other global styles force color to white, this rule increases specificity */
-.tabs > button:not(.active) {
-  color: #172033 !important;
-  background: #ffffff !important;
-}
-
-/* Ensure the active button remains visible even if other rules try to dim it */
-.tabs > button.active,
-.tabs > button[aria-selected="true"] {
-  color: #ffffff !important;
-  background: #172033 !important;
+.tabs button:focus-visible {
+  outline: 3px solid rgba(84,110,255,.22);
+  outline-offset: 2px;
 }
 
 .section-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 24px;
   margin-bottom: 24px;
 }
 
 .section-label {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
   color: #667085;
   letter-spacing: 1px;
 }
 
-.section-heading h2 {
-  margin: 6px 0 0;
-  font-size: 26px;
-}
+.section-heading h2 { margin: 6px 0 8px; font-size: 26px; }
+.section-heading p { color: #667085; font-size: 14px; line-height: 1.5; }
 
 .problem-box,
 .success-box {
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 14px;
+  white-space: nowrap;
 }
+.problem-box { background: #fff4ed; color: #9a3412; }
+.success-box { background: #ecfdf3; color: #067647; }
 
-.problem-box {
-  background: #fff4ed;
-  color: #9a3412;
-}
-
-.success-box {
-  background: #ecfdf3;
-  color: #067647;
-}
-
-.process-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+.process-list { display: flex; flex-direction: column; gap: 12px; }
 .process-step {
   display: flex;
   gap: 18px;
@@ -158,110 +127,152 @@ button {
   border-radius: 12px;
   padding: 18px;
 }
-
-.process-step.pain-point {
-  border-left: 4px solid #f04438;
-}
-
+.process-step.pain-point { border-left: 4px solid #f04438; }
 .step-number {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #eef2f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  flex-shrink: 0;
+  width: 36px; height: 36px; border-radius: 50%; background: #eef2f6;
+  display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;
+}
+.step-content { flex: 1; }
+.step-content h3 { margin: 0 0 5px; font-size: 16px; }
+.step-content p { margin: 0; color: #667085; font-size: 14px; }
+.pain-label { display: inline-block; margin-top: 8px; padding: 4px 8px; border-radius: 5px; background: #fff1f0; color: #d92d20; font-size: 11px; font-weight: 700; }
+
+.metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 32px; }
+.metric-card { background: white; border: 1px solid #e4e7ec; border-radius: 12px; padding: 20px; }
+.metric-label { color: #667085; font-size: 13px; margin-bottom: 18px; }
+.metric-values { display: flex; align-items: center; justify-content: space-between; }
+.metric-values div:not(.arrow) { display: flex; flex-direction: column; gap: 5px; }
+.metric-values span { font-size: 11px; color: #667085; font-weight: 700; }
+.metric-values strong { font-size: 22px; }
+.arrow { font-size: 22px; color: #98a2b3; }
+
+/* Try Me / interactive prototype */
+.conversation-card,
+.trade-card,
+.risk-result-card,
+.decision-result {
+  background: #fff;
+  border: 1px solid #dfe3ea;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(16,24,40,.06);
 }
 
-.step-content {
-  flex: 1;
-}
-
-.step-content h3 {
-  margin: 0 0 5px;
-  font-size: 16px;
-}
-
-.step-content p {
-  margin: 0;
-  color: #667085;
-  font-size: 14px;
-}
-
-.pain-label {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 4px 8px;
-  border-radius: 5px;
-  background: #fff1f0;
-  color: #d92d20;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.metric-card {
-  background: white;
-  border: 1px solid #e4e7ec;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.metric-label {
-  color: #667085;
-  font-size: 13px;
+.conversation-card {
   margin-bottom: 18px;
+  overflow: hidden;
+  background: linear-gradient(135deg,#fff 0%,#f8f9ff 100%);
 }
 
-.metric-values {
+.conversation-header,
+.trade-card-header,
+.risk-result-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 20px;
 }
 
-.metric-values div:not(.arrow) {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.conversation-header { padding: 24px 24px 18px; }
+.conversation-header h3,
+.trade-card-header h3,
+.risk-result-header h3,
+.decision-result h3 { margin: 5px 0 6px; font-size: 20px; color: #101828; }
+.conversation-header p { margin: 0; max-width: 640px; color: #667085; font-size: 13px; line-height: 1.55; }
+
+.prototype-badge {
+  flex-shrink: 0;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3447b2;
+  border: 1px solid #d9defd;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
 }
 
-.metric-values span {
-  font-size: 11px;
-  color: #667085;
+.conversation-input-area { padding: 0 24px 24px; }
+.conversation-input-area textarea {
+  display: block;
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  padding: 15px 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  background: #fff;
+  color: #101828;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.conversation-input-area textarea:focus { border-color: #6675e8; box-shadow: 0 0 0 4px rgba(102,117,232,.12); }
+.extract-button,
+.run-check-button,
+.approve-button,
+.reject-button {
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
   font-weight: 700;
+  transition: transform .12s, box-shadow .15s, opacity .15s;
 }
+.extract-button:hover,
+.run-check-button:hover,
+.approve-button:hover,
+.reject-button:hover { transform: translateY(-1px); }
+.extract-button:disabled,
+.run-check-button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.extract-button { margin-top: 12px; padding: 11px 16px; background: #172033; color: #fff; }
 
-.metric-values strong {
-  font-size: 22px;
+.trade-card { padding: 24px; }
+.trade-card-header { align-items: center; padding-bottom: 18px; border-bottom: 1px solid #eaecf0; }
+.trade-card-header h3 { margin: 0; }
+.trade-form { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; padding: 22px 0; }
+.form-field { display: flex; flex-direction: column; gap: 7px; }
+.form-field label { font-size: 12px; font-weight: 700; color: #475467; }
+.form-field input,
+.form-field select {
+  width: 100%; padding: 11px 12px; border: 1px solid #d0d5dd; border-radius: 8px;
+  background: #fff; color: #101828; font-size: 14px; outline: none;
 }
+.form-field input:focus,
+.form-field select:focus { border-color: #6675e8; box-shadow: 0 0 0 3px rgba(102,117,232,.1); }
+.run-check-button { width: 100%; padding: 13px 18px; background: #172033; color: #fff; box-shadow: 0 4px 12px rgba(23,32,51,.15); }
+.validation-message { margin-top: 14px; padding: 12px; border-radius: 8px; background: #fff4ed; color: #9a3412; font-size: 13px; }
 
-.arrow {
-  font-size: 22px;
-  color: #98a2b3;
-}
+.risk-result-card { margin-top: 20px; padding: 22px; background: #fbfcfe; }
+.risk-result-header { align-items: center; }
+.risk-badge { padding: 7px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; }
+.risk-badge.low { background: #ecfdf3; color: #067647; }
+.risk-badge.medium { background: #fffaeb; color: #b54708; }
+.risk-badge.high { background: #fff1f0; color: #d92d20; }
+.risk-details { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.risk-details > div { padding: 14px; border: 1px solid #eaecf0; border-radius: 9px; background: #fff; }
+.risk-details span { display: block; color: #667085; font-size: 11px; margin-bottom: 5px; }
+.risk-details strong { font-size: 14px; color: #101828; }
+.human-guardrail { display: flex; gap: 12px; padding: 15px; border-radius: 10px; background: #f2f4f7; }
+.guardrail-icon { font-size: 20px; }
+.human-guardrail strong { color: #101828; font-size: 13px; }
+.human-guardrail p { margin: 4px 0 0; color: #667085; font-size: 12px; line-height: 1.5; }
+.risk-actions { display: flex; gap: 10px; margin-top: 18px; }
+.approve-button { padding: 10px 18px; background: #067647; color: #fff; }
+.reject-button { padding: 10px 18px; background: #fff; color: #d92d20; border: 1px solid #fecdca; }
+.decision-result { display: flex; gap: 14px; align-items: center; margin-top: 18px; padding: 18px; }
+.decision-result.approved { border-color: #abefc6; background: #f6fef9; }
+.decision-result.rejected { border-color: #fecdca; background: #fff8f7; }
+.decision-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; background: #ecfdf3; color: #067647; }
+.decision-result.rejected .decision-icon { background: #fff1f0; color: #d92d20; }
+.decision-result p { margin: 0; color: #667085; font-size: 13px; }
 
 @media (max-width: 700px) {
-
-  .header {
-    padding: 30px 24px;
-  }
-
-  .section-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .metrics {
-    grid-template-columns: 1fr;
-  }
-
+  .header { padding: 30px 24px; }
+  .container { margin-top: 24px; }
+  .tabs { display: flex; width: 100%; position: static; }
+  .tabs button { min-width: 0; flex: 1; padding: 10px 8px; }
+  .section-heading { flex-direction: column; align-items: flex-start; }
+  .problem-box,.success-box { white-space: normal; }
+  .metrics,.trade-form,.risk-details { grid-template-columns: 1fr; }
+  .conversation-header,.trade-card-header,.risk-result-header { flex-direction: column; }
 }
