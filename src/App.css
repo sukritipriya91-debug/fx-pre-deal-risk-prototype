@@ -59,11 +59,13 @@ button {
 .tabs button {
   padding: 12px 28px;
   border: 1px solid #d0d5dd;
-  background: white;
+  background: #ffffff; /* explicit white background */
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  color: #172033; /* explicit dark text color for unselected tabs */
+  color: #172033 !important; /* explicit dark text color for unselected tabs */
+  box-shadow: 0 1px 0 rgba(23,32,51,0.04);
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
 /* Hover / focus states */
@@ -71,7 +73,7 @@ button {
 .tabs button:focus {
   border-color: #98a2b3;
   outline: none;
-  box-shadow: 0 2px 6px rgba(23,32,51,0.06);
+  box-shadow: 0 4px 12px rgba(23,32,51,0.08);
 }
 
 /* Active tab (selected) keeps a strong contrast */
@@ -79,12 +81,13 @@ button {
   background: #172033;
   color: white;
   border-color: #172033;
+  box-shadow: 0 6px 18px rgba(23,32,51,0.12);
 }
 
 /* If other global styles force color to white, this rule increases specificity */
 .tabs > button:not(.active) {
   color: #172033 !important;
-  background: white !important;
+  background: #ffffff !important;
 }
 
 .section-heading {
@@ -245,4 +248,3 @@ button {
   }
 
 }
-.tru
