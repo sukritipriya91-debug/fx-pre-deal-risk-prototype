@@ -65,7 +65,7 @@ button {
   font-weight: 600;
   color: #172033 !important; /* explicit dark text color for unselected tabs */
   box-shadow: 0 1px 0 rgba(23,32,51,0.04);
-  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
 }
 
 /* Hover / focus states */
@@ -74,20 +74,36 @@ button {
   border-color: #98a2b3;
   outline: none;
   box-shadow: 0 4px 12px rgba(23,32,51,0.08);
+  transform: translateY(-1px);
 }
 
 /* Active tab (selected) keeps a strong contrast */
 .tabs button.active {
-  background: #172033;
-  color: white;
-  border-color: #172033;
-  box-shadow: 0 6px 18px rgba(23,32,51,0.12);
+  background: #172033 !important;
+  color: #ffffff !important;
+  border-color: #172033 !important;
+  box-shadow: 0 6px 18px rgba(23,32,51,0.18), inset 0 -2px 0 rgba(255,255,255,0.04);
+}
+
+/* Support for aria-selected in case tabs are managed via ARIA instead of .active */
+.tabs button[aria-selected="true"] {
+  background: #172033 !important;
+  color: #ffffff !important;
+  border-color: #172033 !important;
+  box-shadow: 0 6px 18px rgba(23,32,51,0.18), inset 0 -2px 0 rgba(255,255,255,0.04);
 }
 
 /* If other global styles force color to white, this rule increases specificity */
 .tabs > button:not(.active) {
   color: #172033 !important;
   background: #ffffff !important;
+}
+
+/* Ensure the active button remains visible even if other rules try to dim it */
+.tabs > button.active,
+.tabs > button[aria-selected="true"] {
+  color: #ffffff !important;
+  background: #172033 !important;
 }
 
 .section-heading {
