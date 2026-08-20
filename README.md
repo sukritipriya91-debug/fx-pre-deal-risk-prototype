@@ -45,7 +45,7 @@ Being transparent: this project was developed as a rapid prototype with help fro
 
 ## Live demo
 
-- Live demo: REPLACE_WITH_LIVE_DEMO_URL
+- Live demo: https://fx-pre-deal-risk-prototype-efo5.vercel.app/
 
 (Replace the placeholder above with your Vercel or other deployment URL.)
 
