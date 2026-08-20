@@ -2,6 +2,9 @@
 
 A lightweight prototype that helps front-office users get immediate pre-deal risk guidance for FX trades. It demonstrates how a compact form or a conversational AI assistant can surface quick risk indicators to speed decision-making.
 
+Note-
+Inspired by a similar conversational credit-risk workflow I built in production at Commonwealth Bank of Australia.
+
 ## As-Is → To-Be
 
 - As-Is: Pre-deal risk checks are often manual, siloed across spreadsheets and legacy tools, and slow to produce actionable guidance.
@@ -57,3 +60,4 @@ Being transparent: this project was developed as a rapid prototype with help fro
 ## License
 
 - Specify a license (e.g., MIT) or add your organization license file.
+
