@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProcessStep from "./Components/ProcessStep";
 import MetricCard from "./Components/MetricCard";
 import process from "./Data/process.json";
@@ -44,8 +44,19 @@ function App() {
       setRiskResult(calculateRisk(tradeInput));
       setIsChecking(false);
       setAssistantStatus("Recommendation ready — human decision required");
-    }, automated ? 900 : 1200);
+    }, automated ? 700 : 1200);
   };
+
+  useEffect(() => {
+    if (!isTradeComplete || isExtracting || activeTab !== "tryIt") return undefined;
+
+    setAssistantStatus("Trade complete — running risk assessment automatically");
+    const timer = setTimeout(() => {
+      runPreDealCheckForTrade(trade, { automated: true });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [trade, isTradeComplete, isExtracting, activeTab]);
 
   const handleChange = (field, value) => {
     setTrade((previous) => {
@@ -53,7 +64,7 @@ function App() {
       setRiskResult(null);
       setDecision(null);
       setValidationError("");
-      setAssistantStatus("Trade updated — review before decision");
+      setAssistantStatus("Trade updated — completing assessment automatically");
       return nextTrade;
     });
   };
@@ -101,8 +112,7 @@ function App() {
 
       const complete = Object.values(extractedTrade).every(Boolean);
       if (complete) {
-        setAssistantStatus("Trade captured — checking risk automatically");
-        runPreDealCheckForTrade(extractedTrade, { automated: true });
+        setAssistantStatus("Trade captured — automatic risk assessment queued");
       } else {
         setAssistantStatus("Trade captured — complete the highlighted details");
         setValidationError("I captured what I could. Please complete the missing mandatory trade details below.");
@@ -221,7 +231,7 @@ function App() {
             <div className="trade-card premium-panel">
               <div className="trade-card-header">
                 <div><span className="section-label">STRUCTURED TRADE DATA</span><h3>Trade details</h3></div>
-                <span className={`completion-badge ${isTradeComplete ? "complete" : "incomplete"}`}>{isTradeComplete ? "READY FOR CHECK" : "REQUIRES INPUT"}</span>
+                <span className={`completion-badge ${isTradeComplete ? "complete" : "incomplete"}`}>{isTradeComplete ? "AUTO-CHECKING" : "REQUIRES INPUT"}</span>
               </div>
               <div className="trade-form">
                 <div className="form-field"><label>Currency pair</label><select value={trade.currencyPair} onChange={(e) => handleChange("currencyPair", e.target.value)}><option value="">Select</option><option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>USD/CHF</option></select></div>
@@ -232,8 +242,8 @@ function App() {
               </div>
 
               <div className="check-bar">
-                <div><span className="section-label">PRE-DEAL ASSESSMENT</span><p>Conversational submissions run automatically when complete. You can also rerun after manually editing any field.</p></div>
-                <button className="run-check-button" onClick={runPreDealCheck} disabled={isChecking || !isTradeComplete}>{isChecking ? "Checking..." : "Run / Refresh Check"}</button>
+                <div><span className="section-label">PRE-DEAL ASSESSMENT</span><p>The assessment starts automatically as soon as all mandatory inputs are complete. The button remains available only as a manual refresh.</p></div>
+                <button className="run-check-button" onClick={runPreDealCheck} disabled={isChecking || !isTradeComplete}>{isChecking ? "Checking..." : "Refresh Check"}</button>
               </div>
 
               {validationError && <div className="validation-message">⚠ {validationError}</div>}
